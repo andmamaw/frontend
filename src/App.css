@@ -1,7 +1,23 @@
-.App {
-  text-align: center;
+/* Base styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f2f5;
 }
 
+/* App container */
+.App {
+  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+/* Logo animation */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -13,6 +29,7 @@
   }
 }
 
+/* App header styles */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -22,12 +39,23 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Links */
 .App-link {
   color: #61dafb;
+  text-decoration: none;
+  font-weight: bold;
 }
 
+.App-link:hover {
+  text-decoration: underline;
+}
+
+/* Keyframes for spinning logo */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +63,42 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"], input[type="password"] {
+  padding: 10px;
+  margin: 10px 0;
+  width: 80%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #21a1f1;
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  color: #888;
+  font-size: 14px;
+  text-align: center;
 }

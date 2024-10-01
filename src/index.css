@@ -1,13 +1,33 @@
+/* Pengaturan global untuk body */
 body {
   margin: 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f4f6f9; /* Memberikan latar belakang yang lembut */
+  color: #333; /* Warna teks yang mudah dibaca */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Penataan kode dalam elemen <code> */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  background-color: #f1f1f1; /* Warna latar belakang untuk kode */
+  padding: 5px 8px; /* Menambah padding untuk kenyamanan */
+  border-radius: 5px; /* Membulatkan sudut */
+  font-size: 90%; /* Mengatur ukuran font sedikit lebih kecil */
+  color: #d63384; /* Memberikan warna berbeda pada teks kode */
 }
+
+/* Pengaturan tambahan untuk responsivitas */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* Menambah ukuran font di layar kecil */
+  }
+
+  code {
+    font-size: 85%; /* Mengurangi ukuran font untuk elemen kode */
+  }
+}
+  
