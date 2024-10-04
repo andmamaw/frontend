@@ -1,34 +1,30 @@
-.magang-list {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-.magang-list th, .magang-list td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.magang-list th {
-  background-color: #4CAF50;
-  color: white;
-  text-align: left;
-}
-
-.magang-form-container {
-  margin: 20px;
-}
-
-.magang-form input {
-  margin-bottom: 10px;
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.form-actions {
+.magang-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  align-items: flex-start; /* Align items to the top */
+  padding: 20px;
+}
+
+.magang-form {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.magang-table {
+  flex: 1;
+  margin-left: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
 }
