@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const MagangForm = ({ fetchMagang, selectedMagang, setSelectedMagang }) => {
+const MagangForm = ({ selectedMagang, fetchMagang, clearSelectedMagang }) => {
     const [formData, setFormData] = useState({
         nama: '',
         nim: '',
@@ -13,28 +13,36 @@ const MagangForm = ({ fetchMagang, selectedMagang, setSelectedMagang }) => {
         hasil: ''
     });
 
+    // Handle input change
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            if (selectedMagang) {
+                // Update existing magang
+                await axios.put(`http://localhost:3000/api/magang/${selectedMagang.id}`, formData);
+            } else {
+                // Add new magang
+                await axios.post('http://localhost:3000/api/magang', formData);
+            }
+            fetchMagang();
+            clearSelectedMagang();  // Clear the form after submitting
+        } catch (error) {
+            console.error('Error submitting the form', error);
+        }
+    };
+
+    // Populate form with selected magang data
     useEffect(() => {
         if (selectedMagang) {
             setFormData(selectedMagang);
-        }
-    }, [selectedMagang]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            if (selectedMagang) {
-                await axios.put(`http://localhost:3000/api/magang/${formData.id}`, formData);
-            } else {
-                await axios.post('http://localhost:3000/api/magang', formData);
-            }
+        } else {
             setFormData({
                 nama: '',
                 nim: '',
@@ -45,138 +53,103 @@ const MagangForm = ({ fetchMagang, selectedMagang, setSelectedMagang }) => {
                 periode_selesai: '',
                 hasil: ''
             });
-            setSelectedMagang(null);
-            fetchMagang();
-        } catch (error) {
-            console.error('Error submitting form', error);
         }
-    };
+    }, [selectedMagang]);
 
     return (
-        <form 
-            onSubmit={handleSubmit} 
-            style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                gap: '15px', 
-                maxWidth: '600px', 
-                margin: '0 auto', // Center the form
-                padding: '20px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add a subtle shadow
-                borderRadius: '10px', 
-                backgroundColor: '#fff' 
-            }}
-        >
-            <h2 style={{ textAlign: 'center' }}>Data Anak Magang</h2>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="nama">Nama:</label>
+        <div className="magang-form-container">
+            <form className="magang-form" onSubmit={handleSubmit}>
+                <h2>{selectedMagang ? 'Edit Data Magang' : 'Tambah Data Magang'}</h2>
+                <label htmlFor="nama">Nama</label>
                 <input
                     type="text"
+                    id="nama"
                     name="nama"
                     value={formData.nama}
                     onChange={handleChange}
-                    placeholder="Nama"
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="nim">NIM:</label>
+
+                <label htmlFor="nim">NIM</label>
                 <input
                     type="text"
+                    id="nim"
                     name="nim"
                     value={formData.nim}
                     onChange={handleChange}
-                    placeholder="NIM"
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="fakultas">Fakultas:</label>
+
+                <label htmlFor="fakultas">Fakultas</label>
                 <input
                     type="text"
+                    id="fakultas"
                     name="fakultas"
                     value={formData.fakultas}
                     onChange={handleChange}
-                    placeholder="Fakultas"
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="program_studi">Program Studi:</label>
+
+                <label htmlFor="program_studi">Program Studi</label>
                 <input
                     type="text"
+                    id="program_studi"
                     name="program_studi"
                     value={formData.program_studi}
                     onChange={handleChange}
-                    placeholder="Program Studi"
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="asal_universitas">Asal Universitas:</label>
+
+                <label htmlFor="asal_universitas">Asal Universitas</label>
                 <input
                     type="text"
+                    id="asal_universitas"
                     name="asal_universitas"
                     value={formData.asal_universitas}
                     onChange={handleChange}
-                    placeholder="Asal Universitas"
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="periode_mulai">Periode Mulai:</label>
+
+                <label htmlFor="periode_mulai">Periode Mulai</label>
                 <input
                     type="date"
+                    id="periode_mulai"
                     name="periode_mulai"
                     value={formData.periode_mulai}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="periode_selesai">Periode Selesai:</label>
+
+                <label htmlFor="periode_selesai">Periode Selesai</label>
                 <input
                     type="date"
+                    id="periode_selesai"
                     name="periode_selesai"
                     value={formData.periode_selesai}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px' }}
                 />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label htmlFor="hasil">Hasil:</label>
-                <textarea
+
+                <label htmlFor="hasil">Hasil</label>
+                <input
+                    type="text"
+                    id="hasil"
                     name="hasil"
                     value={formData.hasil}
                     onChange={handleChange}
-                    placeholder="Hasil"
                     required
-                    style={{ width: '100%', padding: '10px', borderRadius: '5px', height: '100px' }}
                 />
-            </div>
-            <button 
-                type="submit" 
-                style={{ 
-                    width: '100%', 
-                    padding: '15px', 
-                    backgroundColor: '#4CAF50', 
-                    color: 'white', 
-                    border: 'none', 
-                    borderRadius: '5px', 
-                    cursor: 'pointer',
-                    fontSize: '16px'
-                }}
-            >
-                {selectedMagang ? 'Update' : 'Simpan'}
-            </button>
-        </form>
+
+                <div className="form-actions">
+                    <button type="submit">
+                        {selectedMagang ? 'Update' : 'Simpan'}
+                    </button>
+                    <button type="button" className="reset-button" onClick={clearSelectedMagang}>
+                        Reset
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 

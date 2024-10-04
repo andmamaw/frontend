@@ -10,14 +10,20 @@ import './App.css';
 const App = () => {
     const [magang, setMagang] = useState([]);
     const [selectedMagang, setSelectedMagang] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // Fungsi untuk mengambil data anak magang dari API
     const fetchMagang = async () => {
         try {
+            setLoading(true);
             const response = await axios.get('http://localhost:3000/api/magang');
             setMagang(response.data);
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching data:", error);
+            setError("Error fetching data. Please try again later.");
+            setLoading(false);
         }
     };
 
@@ -37,8 +43,16 @@ const App = () => {
                     <Route path="/magang" element={
                         <>
                             <h1>Data Anak Magang</h1>
-                            <MagangForm fetchMagang={fetchMagang} selectedMagang={selectedMagang} setSelectedMagang={setSelectedMagang} />
-                            <MagangList magang={magang} fetchMagang={fetchMagang} setSelectedMagang={setSelectedMagang} />
+                            {loading ? (
+                                <p>Loading data...</p>
+                            ) : error ? (
+                                <p>{error}</p>
+                            ) : (
+                                <>
+                                    <MagangForm fetchMagang={fetchMagang} selectedMagang={selectedMagang} setSelectedMagang={setSelectedMagang} />
+                                    <MagangList magang={magang} fetchMagang={fetchMagang} setSelectedMagang={setSelectedMagang} />
+                                </>
+                            )}
                         </>
                     } />
 

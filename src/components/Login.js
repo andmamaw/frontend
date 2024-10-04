@@ -1,6 +1,6 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'; // Import the new CSS
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -10,33 +10,31 @@ const Login = () => {
     const handleLogin = (e) => {
         e.preventDefault();
         // Implement your login logic here
-        // For now, just navigate to the magang page after a successful login
-        navigate('/magang');
+        navigate('/magang'); // Redirect to magang page on successful login
     };
 
     return (
-        <div>
-            <h2>Login Page</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
+        <div className="login-container">
+            <form className="login-form" onSubmit={handleLogin}>
+                <h2>Welcome Back</h2>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
                 <button type="submit">Login</button>
+                <div className="signup-link">
+                    Don't have an account? <a href="/signup">Sign up</a>.
+                </div>
             </form>
         </div>
     );
